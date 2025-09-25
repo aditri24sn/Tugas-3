@@ -1,18 +1,22 @@
 package com.example.myapplication.screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.*
 
 @Composable
-fun DetailScreen() {
+fun DetailScreen(
+    onBackDaftar: () -> Unit,
+    onBackLogin: () -> Unit
+) {
+    val nim = "235150701111033"
+    val nama = "Aditri Surya Nugraha"
+    val email = "aditri@email.com"
+    val alamat = "Malang, Jawa Timur"
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -20,31 +24,22 @@ fun DetailScreen() {
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Detail Data", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text("NIM     : 235150701111033")
-        Text("Nama    : Aditri Surya Nugraha")
-        Text("Email   : aditri@example.com")
-        Text("Alamat  : Malang, Indonesia")
-
-        Spacer(modifier = Modifier.height(20.dp))
+        Text("NIM: $nim", modifier = Modifier.padding(bottom = 8.dp))
+        Text("Nama: $nama", modifier = Modifier.padding(bottom = 8.dp))
+        Text("Email: $email", modifier = Modifier.padding(bottom = 8.dp))
+        Text("Alamat: $alamat", modifier = Modifier.padding(bottom = 16.dp))
 
         Button(
-            onClick = { /* nanti kembali ke daftar */ },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp)
+            onClick = onBackDaftar,
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         ) {
-            Text("DAFTAR")
+            Text("Kembali ke DAFTAR")
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewDetailScreen() {
-    MaterialTheme {
-        DetailScreen()
+        Button(
+            onClick = onBackLogin,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Kembali ke LOGIN")
+        }
     }
 }
