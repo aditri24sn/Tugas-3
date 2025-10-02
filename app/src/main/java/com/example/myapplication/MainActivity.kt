@@ -4,10 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
-import com.example.myapplication.screen.DaftarScreen
-import com.example.myapplication.screen.DetailScreen
-import com.example.myapplication.screen.LoginScreen
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.screen.Daftar
+import com.example.myapplication.screen.Detail
+import com.example.myapplication.screen.Login
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,19 +25,37 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
-    var currentScreen by remember { mutableStateOf("login") }
+    val navController = rememberNavController()
 
-    when (currentScreen) {
-        "login" -> LoginScreen(
-            onLogin = { currentScreen = "detail" },
-            onDaftar = { currentScreen = "daftar" }
-        )
-        "daftar" -> DaftarScreen(
-            onDaftar = { currentScreen = "detail" }
-        )
-        "detail" -> DetailScreen(
-            onBackDaftar = { currentScreen = "daftar" },
-            onBackLogin = { currentScreen = "login" }
-        )
+    NavHost(
+        navController = navController,
+        startDestination = NavDestination.Login
+    ) {
+        composable(NavDestination.Login) {
+            Login(
+                onLoginClick = { navController.navigate(NavDestination.Detail) },
+                onDaftarClick = { navController.navigate(NavDestination.Daftar) }
+            )
+        }
+
+        composable(NavDestination.Daftar) {
+            Daftar(
+                onSimpanClick = {
+                    navController.navigate(NavDestination.Detail)
+                }
+            )
+        }
+
+        composable(NavDestination.Detail) {
+            Detail(
+                onDaftarClick = { navController.navigate(NavDestination.Daftar) },
+                onLoginClick = {
+                    navController.popBackStack(
+                        NavDestination.Login,
+                        inclusive = false
+                    )
+                }
+            )
+        }
     }
 }

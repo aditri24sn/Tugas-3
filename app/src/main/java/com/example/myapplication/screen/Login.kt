@@ -1,49 +1,55 @@
 package com.example.myapplication.screen
 
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoginScreen(
-    onLogin: () -> Unit,
-    onDaftar: () -> Unit
+fun Login(
+    onLoginClick: () -> Unit,
+    onDaftarClick: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .padding(20.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+        TextField(
+            value = username,
+            onValueChange = { username = it },
+            label = { Text("Username") },
+            modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-            visualTransformation = PasswordVisualTransformation()
+            modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(
-            onClick = onLogin,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            onClick = onLoginClick,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text("LOGIN")
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         Button(
-            onClick = onDaftar,
+            onClick = onDaftarClick,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("DAFTAR")
